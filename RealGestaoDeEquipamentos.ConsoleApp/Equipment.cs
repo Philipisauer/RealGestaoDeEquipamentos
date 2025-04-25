@@ -5,25 +5,25 @@ namespace RealGestaoDeEquipamentos.ConsoleApp
     public class Equipment
     {
         public int Id;
-        public string Nome;
-        public string Fabricante;
-        public decimal PrecoDoProduto;
-        public DateTime DataDeFabricacao;
+        public string Name;
+        public string Maker;
+        public decimal ProductValue;
+        public DateTime FabricationDate;
 
-        public Equipment(string nome, string fabricante, decimal precoDoProduto, DateTime dataDeFabricacao) 
+        public Equipment(string name, string maker, decimal productValue, DateTime fabricationDate) 
         {
-            Nome = nome;
-            Fabricante = fabricante;
-            PrecoDoProduto = precoDoProduto;
-            DataDeFabricacao = dataDeFabricacao;
+            Name = name;
+            Maker = maker;
+            ProductValue = productValue;
+            FabricationDate = fabricationDate;
         }
 
         
         public string ObterNumeroDeSerie()
         {
-            string tresPrimeirosLetras = Nome.Substring(0, 3);
+            string firstThreeLetters = Name.Substring(0, 3);
 
-            return $"{tresPrimeirosLetras}-{Id}";
+            return $"{firstThreeLetters}-{Id}";
         }
         
             
