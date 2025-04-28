@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace RealGestaoDeEquipamentos.ConsoleApp
+namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
 {
     public class Equipment
     {
