@@ -1,11 +1,13 @@
-﻿namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
+﻿using RealGestaoDeEquipamentos.ConsoleApp.Compartilhados;
+
+namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
 {
     public class EquipmentScreen
     {
         public Equipment[] equipments = new Equipment[100];
         public int counterEquipment = 0;
 
-        public string ShowMenu()
+        public char ShowMenu()
         {
             Console.Clear();
             Console.WriteLine("-----------------------------------------");
@@ -16,7 +18,7 @@
             Console.WriteLine("2 - Editar equipamentos");
             Console.WriteLine("3 - Excluir equipamentos");
             Console.WriteLine("4 - Visualizar equipamentos");
-            string chosenOption = Console.ReadLine()!;
+            char chosenOption = Console.ReadLine()![0];
 
             return chosenOption;
         }

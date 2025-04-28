@@ -1,4 +1,4 @@
-﻿namespace RealGestaoDeEquipamentos.ConsoleApp
+﻿namespace RealGestaoDeEquipamentos.ConsoleApp.Compartilhados
 {
     public static class GeradorIds
     {

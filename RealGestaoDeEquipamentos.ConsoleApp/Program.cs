@@ -1,46 +1,70 @@
-﻿using RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament;
+﻿using RealGestaoDeEquipamentos.ConsoleApp.Compartilhados;
+using RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament;
 using System.Security.Cryptography.X509Certificates;
 
 namespace RealGestaoDeEquipamentos.ConsoleApp
 {
     internal class Program
     {
-        
-
         static void Main(string[] args)
         {
             EquipmentScreen equipmentScreen = new EquipmentScreen();
-            while(true)
+
+            MainScreen mainScreen = new MainScreen();
+
+            CallScreen callScreen = new CallScreen(equipmentScreen);
+
+            while (true)
             {
-                string chosenOption = equipmentScreen.ShowMenu();
+                char mainOption = mainScreen.ShowMainMenu();
 
-                switch (chosenOption)
+                if (mainOption == '1')
                 {
-                    case "1":
-                        equipmentScreen.registerEquipment();
-                        break;
+                    char chosenOption = equipmentScreen.ShowMenu();
 
-                    case "2":
-                        equipmentScreen.editEquipment();
-                        break;
+                    switch (chosenOption)
+                    {
+                        case '1':
+                            equipmentScreen.registerEquipment(); break;
 
-                    case "3":
-                        equipmentScreen.deletEquipment();
-                        break;
+                        case '2':
+                            equipmentScreen.editEquipment(); break;
 
-                    case "4":
-                        equipmentScreen.ViewEquipments(true);
-                        break;
+                        case '3':
+                            equipmentScreen.deletEquipment(); break;
 
-                    default:
-                        Console.WriteLine("Saindo do programa...");
-                        break;
+                        case '4':
+                            equipmentScreen.ViewEquipments(true); break;
+
+                        default:
+                            break;
+                    }
                 }
 
-                Console.ReadLine();
-            }
-           
+                if (mainOption == '2')
+                {
+                    char chosenOption = callScreen.ShowMenu();
 
+                    switch (chosenOption)
+                    {
+                        case '1':
+                            callScreen.registerCall(); break;
+
+                        case '2':
+                            callScreen.editCall(); break;
+
+                        case '3':
+                            callScreen.deletCall(); break;
+
+                        case '4':
+                            callScreen.ViewCall(true); break;
+
+                        default:
+                            break;
+                    }
+                    Console.ReadLine();
+                }
+            }
         }
     }
 }
