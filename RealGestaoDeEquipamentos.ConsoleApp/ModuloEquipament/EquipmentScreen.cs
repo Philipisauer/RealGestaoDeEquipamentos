@@ -4,8 +4,12 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
 {
     public class EquipmentScreen
     {
-        public Equipment[] equipments = new Equipment[100];
-        public int counterEquipment = 0;
+        public EquipmentRepository EquipmentRepository;
+
+        public EquipmentScreen()
+        {
+            EquipmentRepository = new EquipmentRepository();
+        }
 
         public char ShowMenu()
         {
@@ -23,7 +27,7 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
             return chosenOption;
         }
 
-        public void registerEquipment()
+        public void RegisterEquipment()
         {
             Console.Clear();
 
@@ -40,9 +44,8 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
             DateTime fabricationDate = Convert.ToDateTime(Console.ReadLine());
 
             Equipment newEquipment = new Equipment(name, maker, valueOfProduct, fabricationDate);
-            equipments[counterEquipment] = newEquipment;
-            counterEquipment++;
-            newEquipment.Id = counterEquipment;
+
+            EquipmentRepository.RegisterEquipment(newEquipment);
         }
 
         public void editEquipment()
@@ -72,24 +75,10 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
             DateTime fabricationDate = Convert.ToDateTime(Console.ReadLine());
 
             Equipment newEquipment = new Equipment(name, maker, valueOfProduct, fabricationDate);
-            newEquipment.Id = GeradorIds.createEquipmentId();
+            newEquipment.Id = GeradorIds.CreateEquipmentId();
 
-            bool couldEdit = false;
+            bool couldEdit = EquipmentRepository.EditEquipment(chosenId, newEquipment);
 
-            for (int i = 0; i < equipments.Length; i++)
-            {
-                if (equipments[i] == null) continue;
-
-                else if (equipments[i].Id == chosenId)
-                {
-                    equipments[i].Name = newEquipment.Name;
-                    equipments[i].Maker = newEquipment.Maker;
-                    equipments[i].ProductValue = newEquipment.ProductValue;
-                    equipments[i].FabricationDate = newEquipment.FabricationDate;
-
-                    couldEdit = true;
-                }
-            }
             if (!couldEdit)
             {
                 Console.WriteLine("Não foi possivel editar o equipamento...");
@@ -113,23 +102,9 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
             Console.Write("Digite o Id do equipamento que deseja excluir: ");
             int chosenId = Convert.ToInt32(Console.ReadLine()!);
 
-            //pq ele é false e nao true????
+            bool couldDelet = EquipmentRepository.DeletEquipment(chosenId);
 
-            bool couldtDelet = false;
-
-            for (int i = 0; i < equipments.Length; i++)
-            {
-                if (equipments[i] == null) continue;
-
-                else if (equipments[i].Id == chosenId)
-                {
-                    equipments[i] = null;
-
-                    couldtDelet = true;
-                }
-            }
-
-            if (!couldtDelet)
+            if (!couldDelet)
             {
                 Console.WriteLine("Não foi possivel excluir o equipamento");
                 return;
@@ -152,17 +127,22 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
 
             Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -15} | {5, -10}",
                 "Id", "Nome", "Num. serie", "Fabricante", "Preço", "Data de fabricação"
-        );
+            );
 
-            for (int i = 0; i < equipments.Length; i++)
+            //o que esta acontecendo aqui??
+
+            Equipment[] registeredEquipment = EquipmentRepository.ChosenEquipment();
+
+            for (int i = 0; i < registeredEquipment.Length; i++)
             {
-                Equipment e = equipments[i];
+                Equipment e = registeredEquipment[i];
 
                 if (e == null) continue;
 
                 Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -15} | {5, -10}",
                 e.Id, e.Name, e.ObterNumeroDeSerie(), e.Maker, e.ProductValue.ToString("C2"), e.FabricationDate.ToShortDateString());
             }
+            Console.ReadLine();
         }
     }
 }

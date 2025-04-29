@@ -4,15 +4,17 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace RealGestaoDeEquipamentos.ConsoleApp
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
             EquipmentScreen equipmentScreen = new EquipmentScreen();
 
-            MainScreen mainScreen = new MainScreen();
+            EquipmentRepository equipmentRepositoty = equipmentScreen.EquipmentRepository;
 
             CallScreen callScreen = new CallScreen(equipmentScreen);
+
+            MainScreen mainScreen = new MainScreen();
 
             while (true)
             {
@@ -25,7 +27,7 @@ namespace RealGestaoDeEquipamentos.ConsoleApp
                     switch (chosenOption)
                     {
                         case '1':
-                            equipmentScreen.registerEquipment(); break;
+                            equipmentScreen.RegisterEquipment(); break;
 
                         case '2':
                             equipmentScreen.editEquipment(); break;
@@ -48,7 +50,7 @@ namespace RealGestaoDeEquipamentos.ConsoleApp
                     switch (chosenOption)
                     {
                         case '1':
-                            callScreen.registerCall(); break;
+                            callScreen.RegisterCall(); break;
 
                         case '2':
                             callScreen.editCall(); break;

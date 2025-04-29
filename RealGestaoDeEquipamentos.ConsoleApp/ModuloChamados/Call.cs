@@ -2,7 +2,7 @@
 
 namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloChamados
 {
-    public class Calls
+    public class Call
     {
         public int Id;
         public string Title;
@@ -10,7 +10,7 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloChamados
         public Equipment Equipment;
         public DateTime DateOfOpening;
 
-    public Calls(string title, string description, Equipment equipment)
+    public Call(string title, string description, Equipment equipment)
         {
             Title = title;
             Description = description;

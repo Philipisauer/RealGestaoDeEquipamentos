@@ -1,4 +1,6 @@
-﻿using RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament;
+﻿using RealGestaoDeEquipamentos.ConsoleApp.ModuloChamados;
+using RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RealGestaoDeEquipamentos.ConsoleApp
 {
@@ -6,9 +8,12 @@ namespace RealGestaoDeEquipamentos.ConsoleApp
     {
         public EquipmentScreen equipmentScreen;
 
+        public EquipmentRepository equipmentRepository;
+        public CallsRepository callsRepository;
         public CallScreen(EquipmentScreen equipmentScreen)
         {
             this.equipmentScreen = equipmentScreen;
+            callsRepository = new CallsRepository();
         }
 
         public char ShowMenu()
@@ -28,30 +33,31 @@ namespace RealGestaoDeEquipamentos.ConsoleApp
             return chosenOption;
         }
 
-        public void registerCall()
+        public void RegisterCall()
+        {
+            Showheader();
+            Console.WriteLine("Cadastrando Chamado...");
+
+            Call newCall = GetCallsInformations();
+
+            callsRepository.RegisterCall(newCall);
+
+            Console.WriteLine("Chamado foi cadastrado!!");
+        }
+
+        public void editCall()
         {
             Showheader();
 
-            Console.WriteLine("cadastrando chamado...");
-
-            Console.Write("informe o titulo do chamado: ");
-            string title = Console.ReadLine()!.Trim();
-
-            Console.Write("informe a descriçao do chamado: ");
-            string description = Console.ReadLine()!.Trim();
-
-            ViewEquipments();
         }
+
 
         internal void deletCall()
         {
             
         }
 
-        internal void editCall()
-        {
-            
-        }
+        
 
         internal void ViewCall(bool v)
         {
@@ -62,18 +68,20 @@ namespace RealGestaoDeEquipamentos.ConsoleApp
         {
 
             Console.Clear();
-            Console.WriteLine("Gestão de equipamentos");
+            Console.WriteLine("Gestão de chamados");
             Console.WriteLine("-----------------------------------------");
-            Console.WriteLine("Visualizando equipamentos...");
+            Console.WriteLine("Visualizando chamados...");
             Console.WriteLine("-----------------------------------------");
 
             Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -15} | {5, -10}",
                 "Id", "Nome", "Num. serie", "Fabricante", "Preço", "Data de fabricação"
             );
 
-            for (int i = 0; i < equipmentScreen.equipments.Length; i++)
+            Equipment[] equipments = equipmentRepository.ChosenEquipment();
+
+            for (int i = 0; i < equipments.Length; i++)
             {
-                Equipment e = equipmentScreen.equipments[i];
+                Equipment e = equipments[i];
 
                 if (e == null) continue;
 
@@ -90,6 +98,27 @@ namespace RealGestaoDeEquipamentos.ConsoleApp
             Console.WriteLine("-----------------------------------------\n");
 
             Console.WriteLine();
+        }
+        public Call GetCallsInformations()
+        {
+            Console.WriteLine("cadastrando chamado...");
+
+            Console.Write("informe o titulo do chamado: ");
+            string title = Console.ReadLine()!.Trim();
+
+            Console.Write("informe a descriçao do chamado: ");
+            string description = Console.ReadLine()!.Trim();
+
+            ViewEquipments();
+
+            Console.Write("digite o Id do Equipamento que deseja selecionar: ");
+            int equipmentId = Convert.ToInt32(Console.ReadLine()!.Trim());
+
+            Equipment chosenEquipment = equipmentRepository.ChosenEquipmentById(equipmentId);
+
+            Call newCall = new Call(title, description, chosenEquipment);
+
+            return newCall;
         }
     }
 }

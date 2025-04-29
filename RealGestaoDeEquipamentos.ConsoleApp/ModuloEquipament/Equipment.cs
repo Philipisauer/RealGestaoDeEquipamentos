@@ -25,7 +25,5 @@ namespace RealGestaoDeEquipamentos.ConsoleApp.ModuloEquipament
 
             return $"{firstThreeLetters}-{Id}";
         }
-        
-            
     }
 }
